@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SuperHeroRoutingModule } from './super-hero-routing.module';
 import { HomeComponent } from './containers/home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { HomeComponent } from './containers/home/home.component';
   ],
   imports: [
     CommonModule,
-    SuperHeroRoutingModule
+    SuperHeroRoutingModule,
+    HttpClientModule
   ]
 })
 export class SuperHeroModule { }
