@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SuperHeroModule } from 'src/modules/super-hero/super-hero.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { SuperHeroModule } from 'src/modules/super-hero/super-hero.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SuperHeroModule
+    SuperHeroModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
