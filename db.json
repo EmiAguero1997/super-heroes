@@ -15,6 +15,30 @@
     {
       "id": 4,
       "name": "Riquelme"
+    },
+    {
+      "id": 5,
+      "name": "Palermo"
+    },
+    {
+      "id": 6,
+      "name": "Maradona"
+    },
+    {
+      "id": 7,
+      "name": "Ibarra"
+    },
+    {
+      "id": 8,
+      "name": "Clemente Rodriguez"
+    },
+    {
+      "id": 9,
+      "name": "Schiavi"
+    },
+    {
+      "id": 10,
+      "name": "Cascini"
     }
   ]
 }
