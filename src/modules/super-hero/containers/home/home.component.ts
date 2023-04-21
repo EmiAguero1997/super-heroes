@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   filter!:string;
   superheroes!:any;
   superheroesBackup!:any;
-  displayedColumns: string[] = ['id','name'];
+  displayedColumns: string[] = ['id','name','actions'];
   constructor(private superHeroService:SuperHeroService, private cd:ChangeDetectorRef){
     this.getSuperheroes();
   }
@@ -52,7 +52,16 @@ export class HomeComponent implements OnInit {
   }
 
   searchById(){
-
+    this.superHeroService.getOneHero(this.filterId).subscribe({
+      next:response=>{
+        this.superheroes = [response];
+        this.cd.detectChanges();
+      },
+      error:error=>{
+        console.log(error);
+        this.cd.detectChanges();
+      }
+    })
   }
 
   clearFilter(){

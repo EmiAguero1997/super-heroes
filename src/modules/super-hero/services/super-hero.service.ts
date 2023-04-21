@@ -14,7 +14,7 @@ export class SuperHeroService {
     return this._http.get(this.baseUrl+'/superheroes',{headers:headers});
   }
 
-  getOneHero(id:number):Observable<any>{
+  getOneHero(id:string):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
     return this._http.get(this.baseUrl+'/superheroes/'+id,{headers:headers});
   }
@@ -33,4 +33,5 @@ export class SuperHeroService {
       })
     );
   }
+
 }
