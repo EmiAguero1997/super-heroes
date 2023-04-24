@@ -6,7 +6,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <button mat-button color="primary" (click)="search()" [disabled]="!filter">Buscar</button>
+  <button mat-raised-button color="primary" (click)="search()" [disabled]="!filter">Buscar</button>
   <mat-form-field class="example-form-field">
     <mat-label>Buscar por id</mat-label>
     <input matInput type="text" [(ngModel)]="filterId">
@@ -14,7 +14,8 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <button mat-button color="primary" (click)="searchById()" [disabled]="!filterId">Buscar por id</button>
+  <button mat-raised-button color="primary" (click)="searchById()" [disabled]="!filterId">Buscar por id</button>
+  <button mat-raised-button color="primary" (click)="addHero()">Añadir</button>
 <div *ngIf="superheroes">
     <table mat-table [dataSource]="superheroes" class="mat-elevation-z8">
 
@@ -53,12 +54,13 @@
   <form [formGroup]="superHeroForm">
     <mat-form-field class="example-form-field">
       <mat-label>Nombre</mat-label>
-      <input matInput type="text" formControlName="name" [class.is-invalid]="superHeroForm.controls.name.hasError('required')">
+      <input matInput type="text" formControlName="name" [class.is-invalid]="superHeroForm.controls.name.touched && superHeroForm.controls.name.hasError('required')">
       
     </mat-form-field>
     <div mat-dialog-actions>
       <button mat-button (click)="dialogRef.close()">Cancelar</button>
-      <button mat-button cdkFocusInitial (click)="updateHero()" [disabled]="superHeroForm.status === 'INVALID'">Guardar</button>
+      <button mat-button *ngIf="!add" cdkFocusInitial (click)="updateHero()" [disabled]="superHeroForm.status === 'INVALID'">Guardar</button>
+      <button mat-button *ngIf="add"  (click)="addHeroB()" [disabled]="superHeroForm.status === 'INVALID'">Añadir</button>
     </div>
   </form>
 </ng-template>

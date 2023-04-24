@@ -1,8 +1,8 @@
 {
   "superheroes": [
     {
-      "id": 2,
-      "name": "Superman"
+      "name": "Supermann",
+      "id": 2
     },
     {
       "id": 3,
@@ -35,6 +35,10 @@
     {
       "id": 10,
       "name": "Cascini"
+    },
+    {
+      "name": "Dibu",
+      "id": 11
     }
   ]
 }

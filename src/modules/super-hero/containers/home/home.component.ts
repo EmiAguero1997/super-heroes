@@ -11,6 +11,7 @@ import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
+  add = false;
   dialogRef:any;
   @ViewChild('deleteModal') deleteModal!:TemplateRef<unknown>;
   @ViewChild('formModal') formModal!:TemplateRef<unknown>;
@@ -35,7 +36,6 @@ export class HomeComponent implements OnInit {
   getSuperheroes(){
     this.superHeroService.getHeroes().subscribe({
       next:response=>{
-        console.log(response);
         this.superheroes = response;
         this.superheroesBackup = this.superheroes;
         this.cd.detectChanges();
@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
       },
       error:error=>{
         console.log(error);
+        this.superheroes = [];
         this.cd.detectChanges();
       }
     })
@@ -93,7 +94,6 @@ export class HomeComponent implements OnInit {
     }
     this.superHeroService.updateHero(body, this.superHeroForm.controls.id.value).subscribe({
       next:response=>{
-        console.log(response);
         this.dialogRef.close();
         this.getSuperheroes();
       },
@@ -104,10 +104,35 @@ export class HomeComponent implements OnInit {
   }
 
   deleteHero(){
-    console.log(this.superHeroForm.controls.id.value);
     this.superHeroService.deleteHero(this.superHeroForm.controls.id.value).subscribe({
       next:response=>{
-        console.log(response);
+        this.dialogRef.close();
+        this.getSuperheroes();
+      },
+      error:error=>{
+        console.log(error);
+      }
+    })
+  }
+
+  addHero(){
+    this.superHeroForm.setValue({
+      id: this.superheroesBackup[this.superheroesBackup.length-1].id+1,
+      name:''
+    })
+    this.add = true;
+    this.dialogRef = this.dialog.open(this.formModal);
+    this.dialogRef.afterClosed().subscribe((result:any) => {
+      this.add = false;
+    });
+  }
+
+  addHeroB(){
+    let body = {
+      name:this.superHeroForm.controls.name.value
+    };
+    this.superHeroService.addHero(body).subscribe({
+      next:response=>{
         this.dialogRef.close();
         this.getSuperheroes();
       },

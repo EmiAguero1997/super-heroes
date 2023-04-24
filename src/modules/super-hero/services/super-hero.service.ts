@@ -29,9 +29,14 @@ export class SuperHeroService {
     return this._http.delete(this.baseUrl+'/superheroes/'+id,{headers:headers});
   }
 
+  addHero(body:any):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.post(this.baseUrl+'/superheroes/',body,{headers:headers});
+  }
+
   getByString(text: string): Observable<any> {
     return this.getHeroes().pipe(
-      map((response: any) => response.filter((x: any) => x.name.includes(text))),
+      map((response: any) => response.filter((x: any) => x.name.toLowerCase().includes(text.toLowerCase()))),
       catchError((error) => {
         console.log(error);
         return of('no match');
