@@ -3,6 +3,8 @@ import { SuperHeroService } from '../../services/super-hero.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { LoaderService } from '../../services/loader.service';
+
 
 @Component({
   selector: 'app-home',
@@ -25,7 +27,7 @@ export class HomeComponent implements OnInit {
   superheroes!:any;
   superheroesBackup!:any;
   displayedColumns: string[] = ['id','name','actions'];
-  constructor(private superHeroService:SuperHeroService, private cd:ChangeDetectorRef, private fb:FormBuilder, private dialog:MatDialog){
+  constructor(private superHeroService:SuperHeroService, private cd:ChangeDetectorRef, private fb:FormBuilder, private dialog:MatDialog, public loaderService:LoaderService){
     this.getSuperheroes();
   }
 
