@@ -1,10 +1,6 @@
 {
   "superheroes": [
     {
-      "name": "Nuevo nombre",
-      "id": 1
-    },
-    {
       "id": 2,
       "name": "Superman"
     },

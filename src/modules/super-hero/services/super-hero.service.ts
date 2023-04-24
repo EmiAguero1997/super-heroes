@@ -19,9 +19,14 @@ export class SuperHeroService {
     return this._http.get(this.baseUrl+'/superheroes/'+id,{headers:headers});
   }
 
-  updateHero():Observable<any>{
+  updateHero(body:any, id:any):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json');
-    return this._http.put(this.baseUrl+'/superheroes/1',{name:'Nuevo nombre'},{headers:headers});
+    return this._http.put(this.baseUrl+'/superheroes/'+id,body,{headers:headers});
+  }
+
+  deleteHero(id:any):Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json');
+    return this._http.delete(this.baseUrl+'/superheroes/'+id,{headers:headers});
   }
 
   getByString(text: string): Observable<any> {

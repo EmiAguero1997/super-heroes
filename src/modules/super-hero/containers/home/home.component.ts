@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { SuperHeroService } from '../../services/super-hero.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +11,20 @@ import { MatPaginator } from '@angular/material/paginator';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
+  dialogRef:any;
+  @ViewChild('deleteModal') deleteModal!:TemplateRef<unknown>;
+  @ViewChild('formModal') formModal!:TemplateRef<unknown>;
   @ViewChild('paginator') paginator!:MatPaginator;
+  superHeroForm = this.fb.group({
+    id:['',Validators.required],
+    name:['',Validators.required]
+  });
   filterId!:string;
   filter!:string;
   superheroes!:any;
   superheroesBackup!:any;
   displayedColumns: string[] = ['id','name','actions'];
-  constructor(private superHeroService:SuperHeroService, private cd:ChangeDetectorRef){
+  constructor(private superHeroService:SuperHeroService, private cd:ChangeDetectorRef, private fb:FormBuilder, private dialog:MatDialog){
     this.getSuperheroes();
   }
 
@@ -76,6 +85,46 @@ export class HomeComponent implements OnInit {
     this.superheroes = this.superheroesBackup;
     this.paginator._changePageSize(5);
     this.cd.detectChanges();
+  }
+
+  updateHero(){
+    let body = {
+      name:this.superHeroForm.controls.name.value
+    }
+    this.superHeroService.updateHero(body, this.superHeroForm.controls.id.value).subscribe({
+      next:response=>{
+        console.log(response);
+        this.dialogRef.close();
+        this.getSuperheroes();
+      },
+      error:error=>{
+        console.log(error);
+      }
+    })
+  }
+
+  deleteHero(){
+    console.log(this.superHeroForm.controls.id.value);
+    this.superHeroService.deleteHero(this.superHeroForm.controls.id.value).subscribe({
+      next:response=>{
+        console.log(response);
+        this.dialogRef.close();
+        this.getSuperheroes();
+      },
+      error:error=>{
+        console.log(error);
+      }
+    })
+  }
+
+  openDialog(operation:string, element:any){
+    this.superHeroForm.setValue({
+      id:element.id,
+      name:element.name
+    })
+    operation === 'update' ?
+    (
+    this.dialogRef = this.dialog.open(this.formModal)) : this.dialogRef = this.dialog.open(this.deleteModal);
   }
 
 }

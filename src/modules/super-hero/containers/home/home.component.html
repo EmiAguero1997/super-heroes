@@ -33,11 +33,10 @@
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element">
             
-            <button mat-button color="primary">Editar</button>
-            <button mat-button color="primary">Eliminar</button>
+            <button mat-button color="primary" (click)="openDialog('update',element)">Editar</button>
+            <button mat-button color="primary" (click)="openDialog('delete',element)">Eliminar</button>
           </td>
         </ng-container>
-        
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -50,4 +49,26 @@
                   
     </mat-paginator>
 </div>
+<ng-template #formModal>
+  <form [formGroup]="superHeroForm">
+    <mat-form-field class="example-form-field">
+      <mat-label>Nombre</mat-label>
+      <input matInput type="text" formControlName="name" [class.is-invalid]="superHeroForm.controls.name.hasError('required')">
+      
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button mat-button (click)="dialogRef.close()">Cancelar</button>
+      <button mat-button cdkFocusInitial (click)="updateHero()" [disabled]="superHeroForm.status === 'INVALID'">Guardar</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #deleteModal>
+  <form [formGroup]="superHeroForm">
+    <label>¿Está seguro de que desea eliminar el super heroe?</label>
+    <div mat-dialog-actions>
+      <button mat-button (click)="dialogRef.close()">Cancelar</button>
+      <button mat-button cdkFocusInitial (click)="deleteHero()">Sí, eliminar</button>
+    </div>
+  </form>
+</ng-template>
 
