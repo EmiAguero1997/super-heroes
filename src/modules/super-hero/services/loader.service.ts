@@ -12,10 +12,6 @@ export class LoaderService {
   }
 
   hide() {
-    //WE WAIT 2 SECONDS TO SHOW THE SPINNER LOADER SIMULATING A LONG HTTP REQ RESPONSE TIME
-    setTimeout(()=>{
-      this.isLoading$.next(false);
-    },2000)
-    
+    this.isLoading$.next(false);
   }
 }
