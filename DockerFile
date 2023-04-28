@@ -4,22 +4,23 @@ FROM node:18.13.0 as build
 WORKDIR /app
 
 # Copy the package.json and package-lock.json files to the container
-COPY package*.json ./
 
-RUN npm install --force
 
 # Copy the rest of the application code to the container
 COPY . .
 
+COPY db.json .
+
+RUN npm install --force
+
+RUN npm i -g json-server --force
+
 RUN npm install -g @angular/cli@15.1.6
+
 RUN ng build
 
-FROM nginx:stable-alpine
+FROM nginx:stable
 
 COPY --from=build /app/dist/challenge /usr/share/nginx/html
 
-# Expose the port on which the application will run
-EXPOSE 80
-
-# Define the command to run the application
-CMD ["npm", "run", "serve:ssr"]
+EXPOSE 80 

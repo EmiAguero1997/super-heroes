@@ -41,7 +41,9 @@ export class HomeComponent implements OnInit {
         this.superheroes = response;
         this.superheroesBackup = this.superheroes;
         this.cd.detectChanges();
-        this.paginator._changePageSize(this.paginator.pageSize);
+        setTimeout(()=>{
+          this.paginator._changePageSize(this.paginator.pageSize);
+        })
       },
       error:error=>{
         console.log(error);
